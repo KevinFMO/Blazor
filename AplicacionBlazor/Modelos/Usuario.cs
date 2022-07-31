@@ -13,6 +13,7 @@ namespace Modelos
         public string Codigo { get; set; }
         [Required(ErrorMessage = "El nombre es obligatorio")]
         public string Nombre { get; set; }
+        [MinLength(6, ErrorMessage ="La clave debe tener mínimo 6 caracteres")]
         [Required(ErrorMessage = "La clave es obligatoria")]
         public string Clave { get; set; }
         [Required(ErrorMessage = "El rol es obligatorio")]
@@ -21,3 +22,4 @@ namespace Modelos
 
     }
 }
+

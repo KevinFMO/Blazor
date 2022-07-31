@@ -25,7 +25,6 @@ namespace Datos.Repositorios
         }
 
 
-
         public Task<bool> Actualizar(Usuario usuario)
         {
             throw new NotImplementedException();
@@ -36,10 +35,6 @@ namespace Datos.Repositorios
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Usuario>> GetLista(Usuario usuario)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<Usuario> GetPorCodigo(string codigo)
         {
@@ -70,8 +65,8 @@ namespace Datos.Repositorios
             {
                 using MySqlConnection conexion = Conexion();
                 await conexion.OpenAsync();
-                string sql = "INSER INTO usuario (Codigo, Nombre, Clave, Rol, EstaActivo) VALUES(@Codigo, @Nombre, @Clave, @Rol, @EstaActivo);";
-
+                string sql = "INSERT INTO usuario (Codigo, Nombre, Clave, Rol, EstaActivo) VALUES(@Codigo, @Nombre, @Clave, @Rol, @EstaActivo);";
+              
                 result = Convert.ToBoolean( await conexion.ExecuteAsync(sql,usuario) );
 
             }
@@ -82,6 +77,25 @@ namespace Datos.Repositorios
             }
 
             return result;
+        }
+
+        public async Task<IEnumerable<Usuario>> GetLista()
+        {
+            IEnumerable<Usuario> lista = new List<Usuario>();
+            try
+            {
+                using MySqlConnection conexion = Conexion();
+                await conexion.OpenAsync();
+                string sql = "SELECT *FROM usuario;";
+                lista = await conexion.QueryAsync<Usuario>(sql);
+                
+
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return lista;
         }
     }
 }
